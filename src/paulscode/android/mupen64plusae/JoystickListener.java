@@ -27,11 +27,24 @@ class JoystickListener implements View.OnGenericMotionListener
             final int CUp    = 11;
 
             // Z-button and C-pad, interpret left analog trigger and right analog stick
-            parent.mp64pButtons[Z]      = ( event.getAxisValue( MotionEvent.AXIS_Z  ) >  0   );
-            parent.mp64pButtons[CLeft]  = ( event.getAxisValue( MotionEvent.AXIS_RX ) < -0.5 );
-            parent.mp64pButtons[CRight] = ( event.getAxisValue( MotionEvent.AXIS_RX ) >  0.5 );
-            parent.mp64pButtons[CUp]    = ( event.getAxisValue( MotionEvent.AXIS_RY ) < -0.5 );
-            parent.mp64pButtons[CDown]  = ( event.getAxisValue( MotionEvent.AXIS_RY ) >  0.5 );
+            if( false ) // TODO: Wire to a user preference (see also Updater.java)
+            {
+                // Xbox mapping
+                parent.mp64pButtons[Z]      = ( event.getAxisValue( MotionEvent.AXIS_Z  ) >  0   );
+                parent.mp64pButtons[CLeft]  = ( event.getAxisValue( MotionEvent.AXIS_RX ) < -0.5 );
+                parent.mp64pButtons[CRight] = ( event.getAxisValue( MotionEvent.AXIS_RX ) >  0.5 );
+                parent.mp64pButtons[CUp]    = ( event.getAxisValue( MotionEvent.AXIS_RY ) < -0.5 );
+                parent.mp64pButtons[CDown]  = ( event.getAxisValue( MotionEvent.AXIS_RY ) >  0.5 );
+            }
+            else
+            {
+                // PS3 mapping
+                parent.mp64pButtons[Z]      = ( event.getAxisValue( MotionEvent.AXIS_LTRIGGER  ) >  0   );
+                parent.mp64pButtons[CLeft]  = ( event.getAxisValue( MotionEvent.AXIS_Z ) < -0.5 );
+                parent.mp64pButtons[CRight] = ( event.getAxisValue( MotionEvent.AXIS_Z ) >  0.5 );
+                parent.mp64pButtons[CUp]    = ( event.getAxisValue( MotionEvent.AXIS_RZ ) < -0.5 );
+                parent.mp64pButtons[CDown]  = ( event.getAxisValue( MotionEvent.AXIS_RZ ) >  0.5 );
+            }
 
             // Analog X-Y, interpret the left analog stick
             parent.axisX = (int) (  80.0f * event.getAxisValue( MotionEvent.AXIS_X ) );

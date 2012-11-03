@@ -181,20 +181,30 @@ class Updater
         }
         else // New defaults if we have Android 3.1+ native gamepad support
         {
-            // These inputs are mapped to the Xbox controller's analog inputs, so disable their key mappings
+            // These inputs are mapped to the Xbox/PS3 controller's analog inputs, so disable their key mappings
             // These inputs will be collected from MotionEvent objects
-            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "Z Trig", "key(0)" );               // AXIS_Z:  Xbox left analog trigger
-            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "C Button R", "key(0)" );           // AXIS RX: Xbox right stick X
-            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "C Button L", "key(0)" );           // AXIS_RX: Xbox right stick X
-            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "C Button D", "key(0)" );           // AXIS_RY: Xbox right stick Y
-            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "C Button U", "key(0)" );           // AXIS_RY: Xbox right stick Y
+            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "Z Trig", "key(0)" );               // AXIS_Z/AXIS_LTRIGGER:  Xbox/PS3 left analog trigger
+            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "C Button R", "key(0)" );           // AXIS RX/AXIS_Z: Xbox/PS3 right stick X
+            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "C Button L", "key(0)" );           // AXIS_RX/AXIS_Z: Xbox/PS3 right stick X
+            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "C Button D", "key(0)" );           // AXIS_RY/AXIS_RZ: Xbox/PS3 right stick Y
+            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "C Button U", "key(0)" );           // AXIS_RY/AXIS_RZ: Xbox/PS3 right stick Y
             MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "X Axis", "key(0,0)" );             // AXIS_X:  Xbox left stick X
             MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "Y Axis", "key(0,0)" );             // AXIS_Y:  Xbox left stick Y
             
-            // These inputs are mapped to the Xbox controller's digital buttons, so map accordingly
+            // These inputs are mapped to the Xbox/PS3 controller's digital buttons, so map accordingly
             // These inputs will be collected from KeyEvent objects
-            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "A Button", "key(96)" );            // KEYCODE_BUTTON_A:  Xbox A button
-            MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "B Button", "key(99)" );            // KEYCODE_BUTTON_X:  Xbox X button (more natural position than Xbox B button)
+            if( false ) // TODO: Wire to a user preference (see also JoystickListener.java)
+            {
+                // Xbox mapping
+                MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "A Button", "key(96)" );        // KEYCODE_BUTTON_A:  Xbox A button
+                MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "B Button", "key(99)" );        // KEYCODE_BUTTON_X:  Xbox X button (more natural position than Xbox B button)
+            }
+            else
+            {
+                // PS3 mapping
+                MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "A Button", "key(99)" );        // KEYCODE_BUTTON_X:  PS3 X button
+                MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "B Button", "key(96)" );        // KEYCODE_BUTTON_A:  PS3 square button
+            }
             MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "L Trig", "key(102)" );             // KEYCODE_BUTTON_L1: Xbox left shoulder bumper
             MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "R Trig", "key(103)" );             // KEYCODE_BUTTON_R1: Xbox right shoulder bumper
             MenuActivity.mupen64plus_cfg.put( "Input-SDL-Control1", "Start", "key(108)" );              // KEYCODE_BUTTON_START:  Xbox start button
