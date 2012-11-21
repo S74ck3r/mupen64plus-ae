@@ -123,6 +123,7 @@ public class MenuActivity extends PreferenceActivity implements OnPreferenceClic
                     ? new Intent( this, GameActivityXperiaPlay.class )
                     : new Intent( this, GameActivity.class );
             startActivity( intent );
+            finish();
             return true;
         }
         else if( key.equals( MENU_RESET_USER_PREFS ) )

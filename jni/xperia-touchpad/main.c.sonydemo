@@ -1,4 +1,3 @@
-// paulscode, code heavily modified to fit into Mupen64Plus AE project
 /*
  * Copyright (c) 2011, Sony Ericsson Mobile Communications AB.
  * All rights reserved.
@@ -43,8 +42,7 @@
 
 #include <android/log.h>
 
-#define TAG "Touchpad"
-#define LOGV(...) ((void)__android_log_print( ANDROID_LOG_VERBOSE, TAG, __VA_ARGS__ ))
+#define TAG "TouchpadNDK"
 #define LOGI(...) ((void)__android_log_print( ANDROID_LOG_INFO, TAG, __VA_ARGS__ ))
 #define LOGW(...) ((void)__android_log_print( ANDROID_LOG_WARN, TAG, __VA_ARGS__ ))
 #define LOGE(...) ((void)__android_log_print( ANDROID_LOG_ERROR, TAG, __VA_ARGS__ ))
@@ -739,7 +737,6 @@ static
 int
 RegisterThis( JNIEnv* env, jobject clazz )
 {
-LOGI( "RegisterThis() was called" );
 	g_pActivity = (jobject)(*env)->NewGlobalRef( env, clazz );
 
 	return 0;
@@ -778,23 +775,23 @@ JNI_OnLoad( JavaVM * vm, void * reserved )
 		return -1;
 	}
 
-	javaOnNDKTouch	= (*env)->GetMethodID( env, java_activity_class, "onNativeMotion", "(IIIII)Z");
+	javaOnNDKTouch	= (*env)->GetMethodID( env, java_activity_class, "OnNativeMotion", "(IIIII)Z");
 	if( !javaOnNDKTouch )
 	{
 		if( (*env)->ExceptionCheck( env ) )
 		{
-			LOGE("%s - GetMethodID( 'onNativeMotion' ) threw exception!", __FUNCTION__);
+			LOGE("%s - GetMethodID( 'OnNativeMotion' ) threw exception!", __FUNCTION__);
 			(*env)->ExceptionClear( env );
 		}
 		return JNI_FALSE;
 	}
 
-	javaOnNDKKey	= (*env)->GetMethodID( env, java_activity_class, "onNativeKey", "(II)Z");
+	javaOnNDKKey	= (*env)->GetMethodID( env, java_activity_class, "OnNativeKey", "(II)Z");
 	if( !javaOnNDKKey )
 	{
 		if( (*env)->ExceptionCheck( env ) )
 		{
-			LOGE("%s - GetMethodID( 'onNativeKey' ) threw exception!", __FUNCTION__);
+			LOGE("%s - GetMethodID( 'OnNativeKey' ) threw exception!", __FUNCTION__);
 			(*env)->ExceptionClear( env );
 		}
 		return JNI_FALSE;

@@ -19,129 +19,40 @@
  */
 package paulscode.android.mupen64plusae;
 
+import paulscode.android.mupen64plusae.util.FileUtil;
 import android.annotation.TargetApi;
 import android.app.NativeActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 
 @TargetApi( 9 )
 public class GameActivityXperiaPlay extends NativeActivity
 {
-    private final GameLifecycleHandler mLifecycleHandler;
-    private final GameMenuHandler mMenuHandler;
-
-    public GameActivityXperiaPlay()
+    static
     {
-        mLifecycleHandler = new GameLifecycleHandler( this );
-        mMenuHandler = new GameMenuHandler( this );
+        FileUtil.loadNativeLibName( "xperia-touchpad" );
     }
     
-    @Override
-    public boolean onCreateOptionsMenu( Menu menu )
-    {
-        mMenuHandler.onCreateOptionsMenu( menu );
-        return super.onCreateOptionsMenu( menu );
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected( MenuItem item )
-    {
-        mMenuHandler.onOptionsItemSelected( item );
-        return super.onOptionsItemSelected( item );
-    }
+    public static native int RegisterThis();
     
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
-        mLifecycleHandler.onCreateBegin( savedInstanceState );
-        super.onCreate( savedInstanceState );
-        mLifecycleHandler.onCreateEnd( savedInstanceState );
-
-        // Register the call-ins that the JNI code will call
         RegisterThis();
-    }    
-    
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        mLifecycleHandler.onResume();
+        super.onCreate( savedInstanceState );
     }
     
-    @Override
-    protected void onPause()
+    public boolean onNativeMotion( int action, int x, int y, int source, int device_id )
     {
-        super.onPause();
-        mLifecycleHandler.onPause();
-    }
-
-    
-    
-    
-    
-    
-    private static int[] touchPadPointerY = new int[256];
-    private static int[] touchPadPointerX = new int[256];
-    private static boolean[] touchPadPointers = new boolean[256];
-    private static final int PAD_WIDTH = 966;
-    private static final int PAD_HEIGHT = 360;
-    
-    public static native int RegisterThis();
-
-    public void touchPadBeginEvent()
-    {
-    }
-    
-    public void touchPadPointerDown( int pointer_id )
-    {
-        touchPadPointers[pointer_id] = true;
-    }
-    
-    public void touchPadPointerUp( int pointer_id )
-    {
-        touchPadPointers[pointer_id] = false;
-        touchPadPointerX[pointer_id] = -1;
-        touchPadPointerY[pointer_id] = -1;
-    }
-    
-    public void touchPadPointerPosition( int pointer_id, int x, int y )
-    {
-        touchPadPointers[pointer_id] = true;
-        touchPadPointerX[pointer_id] = x;
-        touchPadPointerY[pointer_id] = PAD_HEIGHT - y;
-    }
-    
-    public void touchPadEndEvent()
-    {
-    }
-    
-    public void touchScreenBeginEvent()
-    {
-    }
-    
-    public void touchScreenPointerDown( int pointer_id )
-    {
-    }
-    
-    public void touchScreenPointerUp( int pointer_id )
-    {
-    }
-    
-    public void touchScreenPointerPosition( int pointer_id, int x, int y )
-    {
-    }
-    
-    public void touchScreenEndEvent()
-    {
-    }
-    
-    public void onTouchScreen( boolean[] pointers, int[] pointerX, int[] pointerY, int maxPid )
-    {
+        Log.i( "GameActivityXperiaPlay", "Received native motion event! (" + x + ", " + y
+                + ") (action:" + action + ") (source:" + source + ")" );
+        return true;
     }
     
     public boolean onNativeKey( int action, int keycode )
     {
-        return true;
+        Log.i( "GameActivityXperiaPlay", "Received native key event! (" + keycode + ") (action:"
+                + action + ")" );
+        return false;
     }
 }
