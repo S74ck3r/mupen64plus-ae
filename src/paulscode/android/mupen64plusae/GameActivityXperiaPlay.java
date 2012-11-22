@@ -33,7 +33,7 @@ public class GameActivityXperiaPlay extends NativeActivity
         FileUtil.loadNativeLibName( "xperia-touchpad" );
     }
     
-    public static native int RegisterThis();
+    public native int RegisterThis();
     
     @Override
     protected void onCreate( Bundle savedInstanceState )
