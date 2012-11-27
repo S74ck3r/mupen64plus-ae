@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     
     <application android:label="@string/app_name"
                  android:icon="@drawable/icon"
@@ -118,6 +120,13 @@
         <meta-data android:name="game_display_name"
                    android:resource="@string/app_name" />
         <meta-data android:name="game_icon"
-                   android:resource="@drawable/hireslogo" />
+                   android:resource="@drawable/hireslogo" />	
+
+        <receiver android:name="paulscode.android.mupen64plusae.IncomingCallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE"/>
+            </intent-filter>
+        </receiver>		   
+				
     </application>
 </manifest> 
